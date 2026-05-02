@@ -16,7 +16,7 @@ jobs:
 
       - name: Check for duplicate variable names
         run: |
-          dupes=$(grep -E '^[A-Z_]+=' do_not_track.env | cut -d= -f1 | sort | uniq -d)
+          dupes=$(grep -E '^[A-Z_][A-Z0-9_]*=' do_not_track.env | cut -d= -f1 | sort | uniq -d)
           if [ -n "$dupes" ]; then
             echo "Duplicate variable names:"
             echo "$dupes"
@@ -26,7 +26,7 @@ jobs:
 
       - name: Validate line format
         run: |
-          bad=$(grep -vE '^\s*$|^#|^[A-Z_]+=' do_not_track.env)
+          bad=$(grep -vE '^\s*$|^#|^[A-Z_][A-Z0-9_]*=' do_not_track.env)
           if [ -n "$bad" ]; then
             echo "Malformed lines (not a comment, blank, or valid assignment):"
             echo "$bad"
@@ -36,5 +36,5 @@ jobs:
 
       - name: Report active variable count
         run: |
-          count=$(grep -cE '^[A-Z_]+=' do_not_track.env)
+          count=$(grep -cE '^[A-Z_][A-Z0-9_]*=' do_not_track.env)
           echo "Active opt-out variables: $count"
