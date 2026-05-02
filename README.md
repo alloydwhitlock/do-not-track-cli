@@ -56,7 +56,7 @@ services:
 - name: Disable telemetry
   run: |
     set -a && source do_not_track.env && set +a
-    echo "Sourced $( grep -cE '^[A-Z_]+=' do_not_track.env ) opt-out variables"
+    echo "Sourced $( grep -cE '^[A-Z_][A-Z0-9_]*=' do_not_track.env ) opt-out variables"
 ```
 
 ### 12-factor apps / dotenv
