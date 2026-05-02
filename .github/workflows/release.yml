@@ -16,7 +16,7 @@ jobs:
       - name: Count active opt-out variables
         id: count
         run: |
-          count=$(grep -cE '^[A-Z_]+=' do_not_track.env)
+          count=$(grep -cE '^[A-Z_][A-Z0-9_]*=' do_not_track.env)
           echo "count=$count" >> "$GITHUB_OUTPUT"
 
       - name: Create release
@@ -32,10 +32,8 @@ jobs:
           else
             changelog_url="https://github.com/${REPO}/commits/${TAG_NAME}"
           fi
+          printf '## do_not_track.env\n\nActive opt-out variables: %s\n\nSee [CHANGELOG](%s) for what changed, or browse [do_not_track.env](https://github.com/%s/blob/%s/do_not_track.env) for the full list.\n' \
+            "${VAR_COUNT}" "${changelog_url}" "${REPO}" "${TAG_NAME}" > /tmp/release_notes.md
           gh release create "$TAG_NAME" \
             --title "$TAG_NAME" \
-            --notes "## do_not_track.env
-
-Active opt-out variables: ${VAR_COUNT}
-
-See [CHANGELOG](${changelog_url}) for what changed, or browse [\`do_not_track.env\`](https://github.com/${REPO}/blob/${TAG_NAME}/do_not_track.env) for the full list."
+            --notes-file /tmp/release_notes.md
