@@ -1,0 +1,48 @@
+name: Add a tool
+description: Request a new telemetry opt-out variable be added to do_not_track.env
+labels: ["enhancement"]
+body:
+  - type: input
+    id: tool_name
+    attributes:
+      label: Tool name
+      description: Name of the CLI tool, framework, or SDK
+    validations:
+      required: true
+
+  - type: input
+    id: variable
+    attributes:
+      label: Opt-out variable and value
+      placeholder: "TOOL_TELEMETRY_DISABLED=1"
+    validations:
+      required: true
+
+  - type: input
+    id: docs_link
+    attributes:
+      label: Official documentation link
+      description: Direct link to the page confirming this variable and its value
+    validations:
+      required: true
+
+  - type: dropdown
+    id: generic_var
+    attributes:
+      label: Is the variable name specific to this tool?
+      description: Generic names like ANALYTICS or TELEMETRY_ENABLED may conflict with other tools and belong in the Aggressive / Opt-in section.
+      options:
+        - "Yes — the name is tool-specific"
+        - "No — the name is generic"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I verified the opt-out value from official documentation (not just assumed `1`)
+          required: true
+        - label: I checked that this tool doesn't already respect `DO_NOT_TRACK=1`
+          required: true
