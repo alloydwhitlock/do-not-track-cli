@@ -98,6 +98,17 @@ A few things to check first:
 - If the tool already respects `DO_NOT_TRACK=1`, add a comment noting that rather than a new entry.
 - If the variable name is generic (like `ANALYTICS` or `TELEMETRY_ENABLED`), it belongs in the aggressive opt-ins section at the bottom of the file.
 
+## Versioning
+
+This project uses [semantic versioning](https://semver.org/). Patch releases (`v1.0.x`) are cut automatically whenever `do_not_track.env` is updated on main. Minor and major bumps are done manually for significant changes such as structural reorganization or policy updates.
+
+All releases are at [github.com/alloydwhitlock/do-not-track-cli/releases](https://github.com/alloydwhitlock/do-not-track-cli/releases). To pin to a specific version in CI, reference a release tag directly:
+
+```sh
+git clone --depth 1 --branch v1.0.0 https://github.com/alloydwhitlock/do-not-track-cli.git
+set -a && source do_not_track.env && set +a
+```
+
 ## Credits
 
 [sneak (Jeffrey Paul)](https://github.com/sneak) created the [DO_NOT_TRACK / Console Do Not Track](https://consoledonottrack.com/) standard that many tools now support.
