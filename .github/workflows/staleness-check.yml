@@ -1,0 +1,42 @@
+name: Staleness check
+
+on:
+  schedule:
+    - cron: '0 9 1 * *'  # first of every month, 9am UTC
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run staleness check
+        id: check
+        run: |
+          set +e
+          python scripts/check_staleness.py > staleness_report.txt 2>&1
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+          cat staleness_report.txt
+
+      - name: Open issue if findings exist
+        if: steps.check.outputs.exit_code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          body="$(cat staleness_report.txt)"
+          gh issue create \
+            --title "chore: staleness check findings — $(date +%Y-%m)" \
+            --label "maintenance" \
+            --body "$body"
