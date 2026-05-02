@@ -7,6 +7,9 @@ on:
 
 jobs:
   release:
+    # auto-tag.yml handles releases for automated patch bumps.
+    # This job only runs for manually pushed tags (major/minor bumps).
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     permissions:
       contents: write
