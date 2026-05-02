@@ -26,7 +26,7 @@ jobs:
 
       - name: Validate line format
         run: |
-          bad=$(grep -vE '^\s*$|^#|^[A-Z_][A-Z0-9_]*=' do_not_track.env)
+          bad=$(grep -vE '^\s*$|^#|^[A-Z_][A-Z0-9_]*=' do_not_track.env) || true
           if [ -n "$bad" ]; then
             echo "Malformed lines (not a comment, blank, or valid assignment):"
             echo "$bad"
