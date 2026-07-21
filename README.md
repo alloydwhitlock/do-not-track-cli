@@ -80,6 +80,7 @@ A few variables go further than disabling telemetry. They're in a commented-out 
 | `HF_HUB_OFFLINE=1` | Hugging Face Hub | Blocks all connections to hf.co, model downloads included |
 | `ANALYTICS=no` | AccessMap | Generic name that may affect other tools checking `$ANALYTICS` |
 | `TELEMETRY_ENABLED=0` | projector-cli | Common enough to collide with other tools |
+| `DISABLE_TELEMETRY=1` / `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` | Claude Code | Community reports say this also disables client-side feature-flag evaluation, gating off unrelated product features — not just telemetry |
 
 ## Contributing
 
