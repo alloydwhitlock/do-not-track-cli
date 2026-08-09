@@ -99,6 +99,16 @@ A few things to check first:
 - If the tool already respects `DO_NOT_TRACK=1`, add a comment noting that rather than a new entry.
 - If the variable name is generic (like `ANALYTICS` or `TELEMETRY_ENABLED`), it belongs in the aggressive opt-ins section at the bottom of the file.
 
+## Maintenance
+
+A weekly workflow cross-references `do_not_track.env` against the [toptout dataset](https://github.com/beatcracker/toptout) and upstream docs, then files a `chore: weekly staleness findings` issue with NEW/CHANGED/STALE sections.
+
+Triage findings within the week they're filed:
+
+- Verify each claim against the linked primary source before acting — the automated report can be wrong (wrong variable name, no-op variable, generic name that collides with other tools).
+- Land verified findings directly in `do_not_track.env` via PR, referencing the issue.
+- Close the staleness issue once its findings are addressed (or once confirmed to need no action).
+
 ## Versioning
 
 This project uses [semantic versioning](https://semver.org/). Patch releases (`v1.0.x`) are cut automatically whenever `do_not_track.env` is updated on main. Minor and major bumps are done manually for significant changes such as structural reorganization or policy updates.
